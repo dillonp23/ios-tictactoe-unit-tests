@@ -18,6 +18,7 @@ struct Game {
     mutating internal func makeMark(at coordinate: Coordinate) throws {
         guard let player = activePlayer else { return }
         
+        
         if gameIsOver == true {
             NSLog("Game is over!")
             return
@@ -28,6 +29,15 @@ struct Game {
             if game(board: board, isWonBy: player) == true {
                 winningPlayer = player
                 gameIsOver = true
+                activePlayer = nil
+                NSLog("Player X wins the game")
+                return
+            } else if board.isFull == true {
+                gameIsOver = true
+                activePlayer = nil
+                winningPlayer = nil
+                NSLog("It's a Cat's game!")
+                return
             } else {
                 activePlayer = .o
             }
@@ -36,7 +46,17 @@ struct Game {
             if game(board: board, isWonBy: player) {
                 winningPlayer = player
                 gameIsOver = true
-            } else {
+                activePlayer = nil
+                NSLog("Player O wins the game")
+                return
+            } else if board.isFull == true {
+                gameIsOver = true
+                activePlayer = nil
+                winningPlayer = nil
+                NSLog("It's a Cat's game!")
+                return
+            }
+            else {
                 activePlayer = .x
             }
         }

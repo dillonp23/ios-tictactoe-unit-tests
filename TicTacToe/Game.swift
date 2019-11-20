@@ -13,14 +13,14 @@ struct Game {
     mutating internal func restart() {
         board = GameBoard()
         activePlayer = .x
+        winningPlayer = nil
     }
     
     mutating internal func makeMark(at coordinate: Coordinate) throws {
         guard let player = activePlayer else { return }
         
-        
         if gameIsOver == true {
-            NSLog("Game is over!")
+            NSLog("Game is over! Press Restart to play again!")
             return
         }
         
@@ -36,10 +36,12 @@ struct Game {
                 gameIsOver = true
                 activePlayer = nil
                 winningPlayer = nil
+                catsGame = true
                 NSLog("It's a Cat's game!")
                 return
             } else {
                 activePlayer = .o
+                return
             }
         } else if activePlayer == .o {
             try board.place(mark: .o, on: coordinate)
@@ -53,11 +55,13 @@ struct Game {
                 gameIsOver = true
                 activePlayer = nil
                 winningPlayer = nil
+                catsGame = true
                 NSLog("It's a Cat's game!")
                 return
             }
             else {
                 activePlayer = .x
+                return
             }
         }
     }
@@ -67,5 +71,6 @@ struct Game {
     internal var activePlayer: GameBoard.Mark?
     internal var gameIsOver: Bool
     internal var winningPlayer: GameBoard.Mark?
+    internal var catsGame: Bool?
     
 }

@@ -54,7 +54,20 @@ class TicTacToeUITests: XCTestCase {
         
     }
     
-    
+    func testResetGame() {
+        let app = XCUIApplication()
+        app.launch()
+        
+        //Make a mark on board
+        app.assertMovePlayed(.topLeft, buttonLabelAssertionString: .X, nextPlayerAssertionString: .O)
+        
+        let button = app.buttons["restartButton"]
+        button.tap()
+        
+        let statusLabel = app.staticTexts["statusLabel"]
+        XCTAssertEqual(statusLabel.label, "Player X's turn")
+        
+    }
     
 }
 
